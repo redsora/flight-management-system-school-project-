@@ -278,12 +278,88 @@ def display_users():
 
 
 
+# # This module is for the delete users
+# The code given below is for the function of deleting users such as admin, manager, and standard accounts.
+
+def deleting_users():
+    def deleting_back_user():
+        user = username.get()
+        if not (user in admin or user in manager or user in standard):
+            messagebox.showerror("Username Not Found!", "Username not found! Please try again!")
+        else:
+            if user in admin:
+                del admin[user]
+                messagebox.showinfo("Success!", "Admin User Successfully Deleted!")
+            if user in manager:
+                del manager[user]
+                messagebox.showinfo("Success!", "Manager Successfully Deleted!")
+            if user in standard:
+                del standard[user]
+                messagebox.showinfo("Success!", "Standard User Successfully Deleted!")
+
+    delete_users_scheduled = tk.Toplevel()
+    delete_users_scheduled.title("Delete A User")
+    tk.Label(master=delete_users_scheduled, text="Enter the Username").grid(row=1, column=0)
+    username = tk.Entry(master=delete_users_scheduled)
+    username.grid(row=1, column=1)
+    admin2 = tk.Button(master=delete_users_scheduled, text="Confirm Deletion", width=25,
+                       command=deleting_back_user).grid(row=1, column=2)
 
 
 
 
 
 
+# This module is for the update
+# The code given below, which is for the function of updating the destination, status, and flight number.
+
+import tkinter as tk
+
+def update_btn1():
+    flight_number = number_of_flight.get()
+    if flight_number not in scheduled:
+        scheduled[flight_number] = ["", "", ""]
+        tk.Label(master=scheduled_update, text="Enter Departure Time").grid(row=3, column=0)
+        tk.Label(master=scheduled_update, text="Enter Status").grid(row=4, column=0)
+        tk.Label(master=scheduled_update, text="Enter Destination").grid(row=5, column=0)
+
+def update_btn2():
+    flight_number = number_of_flight.get()
+    departure_time = departure_time.get()
+    stat = stat.get()
+    destination_place = destination_place.get()
+
+    if departure_time:
+        scheduled[flight_number][0] = departure_time
+    if stat:
+        scheduled[flight_number][2] = stat
+    if destination_place:
+        scheduled[flight_number][1] = destination_place
+
+    update_root = tk.Toplevel(scheduled_update)
+    update_root.title("Successfully Updated!")
+    tk.Label(master=update_root, text="Successfully Updated!!").grid(row=0, column=0)
+
+def main():
+    scheduled_update = tk.Tk()
+    scheduled_update.title("Update/Add A Flight")
+
+    tk.Label(master=scheduled_update, text="Enter The Flight Number").grid(row=1, column=0)
+    number_of_flight = tk.Entry(master=scheduled_update)
+    number_of_flight.grid(row=1, column=1)
+
+    tk.Button(master=scheduled_update, text="Confirm", command=update_btn1).grid(row=2, column=1)
+
+    departure_time = tk.Entry(master=scheduled_update)
+    stat = tk.Entry(master=scheduled_update)
+    destination_place = tk.Entry(master=scheduled_update)
+
+    tk.Button(master=scheduled_update, text="Confirm", command=update_btn2).grid(row=6, column=1)
+
+    scheduled_update.mainloop()
+
+if __name__ == "__main__":
+    main()
 
 
 
